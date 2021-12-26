@@ -1,0 +1,131 @@
+{% extends 'index/common/base.html'%}
+
+{% block title %}
+{{name}}
+{% endblock %}
+
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='index/css/article.css')}}"/>
+{% endblock %}
+
+
+{% block main %}
+<div class="main ">
+    <ul class="blog">
+        {% for article in articles %}
+        {% if article.article_show == 1%}
+        <li class="blog_list">
+            <a href="{{article.navbar.nav_href}}/{{article.id}}">
+                <img src="{{article.article_img}}"/>
+                <span class="label" style="">{{article.navbar.nav_name}}</span>
+                <div class="blog_list_content">
+                    <p class="list_content_title">{{article.article_title}}</p>
+                    <p class="list_content_txt">
+                        {{article.article_introduce}}
+                    </p>
+                    <p class="list_content_time">
+                        <span>时间: {{article.datetime}}</span>
+                    </p>
+                </div>
+            </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if count != 0 %}
+        <ul class="blog_list paging">
+            <li>
+                <a href="?page=1">首页</a>
+            </li>
+            {% if number != 1 %}
+            <li>
+                <a href="?page={{number-1}}">上一页</a>
+            </li>
+            {% endif %}
+            {% if count < 9 and  count >= 2%}
+                {% for i in range(number,count+1)%}
+                    {%if i >= number%}
+                         {% if number == i%}
+                            <li style="background: #bbb">
+                               <a href="?page={{i}}">{{i}} </a>
+                            </li>
+                        {%else%}
+                            <li>
+                                <a href="?page={{i}}">{{i}}</a>
+                            </li>
+                        {%endif%}
+                    {%endif%}
+                {%endfor%}
+            {% else %}
+                {% for i in range(number,count)%}
+                    {%if i >= number%}
+                         {% if number == i%}
+                            <li style="background: #bbb">
+                               <a href="?page={{i}}">{{i}} </a>
+                            </li>
+                        {%else%}
+                            <li>
+                                <a href="?page={{i}}">{{i}}</a>
+                            </li>
+                        {%endif%}
+                    {%endif%}
+                {%endfor%}
+            {% endif %}
+            {% if count > 1 and count < 9 %}
+                {% if number < count %}
+                <li>
+                    <a href="?page={{number+1}}">下一页</a>
+                </li>
+                {%endif%}
+            {%endif%}
+            {% if count < 9 %}
+                <li>
+                    <a href="?page={{count}}">末尾</a>
+                </li>
+            {% else%}
+                <li>
+                    <a href="?page={{count-1}}">末尾</a>
+                </li>
+            {%endif%}
+        </ul>
+        {%endif%}
+
+    </ul>
+    <div class="right">
+        <div class="news_list">
+            <div class="news_list_title">
+                <span id="latest_article_btn">最新文章</span>
+                <span id="hot_comments_btn">热门文章</span>
+            </div>
+            <ul id="latest_article_list">
+                {% for article in data %}
+                    {% if article.article_show == 1%}
+                        <li>
+                            <a href="{{article.navbar.nav_href}}/{{article.id}}">{{article.article_title}}</a>
+                        </li>
+                    {% endif%}
+                {% endfor %}
+            </ul>
+            <ul style="display: none;" id="hot_comments_list">
+                {% for article in datas %}
+                    {% if article.article_show == 1%}
+                        <li>
+                            <a href="{{article.navbar.nav_href}}/{{article.id}}">{{article.article_title}}</a>
+                        </li>
+                    {% endif%}
+                {% endfor %}
+            </ul>
+        </div>
+<!--        <div class="redefine news_list">-->
+<!--            <div class="news_list_title">-->
+<!--                <span >猜你喜欢</span>-->
+<!--            </div>-->
+<!--            <ul >-->
+<!--                <li>-->
+<!--                    <a href="">抱歉,目前我猜不到</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+
+<!--        </div>-->
+    </div>
+</div>
+{% endblock %}

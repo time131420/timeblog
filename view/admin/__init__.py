@@ -1,0 +1,1 @@
+from .index import bp as admin_bp

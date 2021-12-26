@@ -1,0 +1,93 @@
+{% extends 'admin/common/base.html' %}
+
+{% block title %}
+网站设置
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <ul class="nav nav-tabs page-tabs">
+                <li class="active"><a href="#!">基本</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <form action="{{url_for('admin.editConfig')}}" method="POST">
+                        {% for messages in get_flashed_messages() %}
+                        <div class="form-group alert alert-success">
+                            <label>{{messages}}</label>
+                        </div>
+                        {% endfor %}
+                        <div class="form-group">
+                            <label>网站标题</label>
+                            <input class="form-control" type="text" name="name"
+                                   value="{{config.name}}" placeholder="请输入站点标题">
+                        </div>
+                        <div class="form-group">
+                            <label>网站小标题</label>
+                            <input class="form-control" type="text" name="subhead"
+                                   value="{{config.subhead}}" placeholder="请输入站点小标题">
+                        </div>
+                        <div class="form-group">
+                            <label>站点关键词</label>
+                            <input class="form-control" type="text" name="keyword"
+                                   value="{{config.keyword}}" placeholder="请输入站点关键词">
+                            <small class="help-block">网站搜索引擎关键字</small>
+                        </div>
+                        <div class="form-group">
+                            <label>站点描述</label>
+                            <textarea class="form-control" rows="5"
+                                      name="description" placeholder="请输入站点描述">{{config.description}}</textarea>
+                            <small class="help-block">网站描述，有利于搜索引擎抓取相关信息</small>
+                        </div>
+                        <div class="form-group">
+                            <label>作者</label>
+                            <input class="form-control" type="text" name="author"
+                                   value="{{config.author}}" placeholder="作者名称">
+                        </div>
+                        <div class="form-group">
+                            <label>邮箱</label>
+                            <input class="form-control" type="email" name="email"
+                                   value="{{config.email}}" placeholder="邮箱" />
+                        </div>
+                        <div class="form-group">
+                            <label>作者简单描述</label>
+                            <input class="form-control" type="text" name="author_referral"
+                                   value="{{config.author_referral}}" placeholder="作者简单描述" />
+                        </div>
+                        <div class="form-group">
+                            <label>版权信息</label>
+                            <input class="form-control" type="text" name="copyright"
+                                   value="{{config.copyright}}" placeholder="请输入版权信息" />
+                        </div>
+                        <div class="form-group">
+                            <label>分页数量</label>
+                            <input class="form-control" type="text" name="number_pages"
+                                   value="{{config.number_pages}}" placeholder="请输入页面分页数量" />
+                            <small class="help-block">全站的内页数量</small>
+                        </div>
+                        <div class="form-group">
+                            <label>后台登录ip</label>
+                            <input class="form-control" type="text" name="Whitea_list"
+                                   value="{{config.Whitea_list}}" placeholder="后台登录ip白名单" />
+                            <small class="help-block">多个用IP用,号分割。为空则是不限制</small>
+                        </div>
+                        <div class="form-group">
+                            <label>站点信息</label>
+                            <textarea class="form-control"  name="information" rows="5"
+                                  placeholder="内容,可以书写html">{{config.information}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary m-r-5">确 定</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock%}

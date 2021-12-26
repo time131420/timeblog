@@ -1,0 +1,108 @@
+{% extends 'admin/common/base.html' %}
+
+{% block title %}
+管理员列表
+{% endblock %}
+
+{% block main%}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-toolbar clearfix">
+                <form class="pull-right search-bar" method="get" action="{{url_for('admin.superuser_list')}}" role="form">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown"
+                                    type="button" aria-haspopup="true" aria-expanded="false">
+                                用户名 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a tabindex="-1" href="javascript:void(0)" >用户名</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control" value="" name="search" placeholder="请输入名称">
+                    </div>
+                </form>
+                <div class="toolbar-btn-action">
+                    <h2>管理员列表</h2>
+                </div>
+            </div>
+            {% for messages in get_flashed_messages() %}
+            <div class="form-group alert alert-success" style="margin: 1%;">
+                {{messages}}
+            </div>
+            {% endfor %}
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>用户名</th>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in superuser %}
+                        <tr>
+                            <td>{{user.id}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.name }}</td>
+                            <td>{{user.type}}</td>
+                            {% if user.state == 1 %}
+                            <td class="text-success">正常</td>
+                            {%else%}
+                            <td class="text-danger">禁用</td>
+                            {% endif %}
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-xs btn-default" href="{{url_for('admin.superuser_list')}}?editpwd={{user.id}}" title="修改密码"
+                                       data-toggle="tooltip"><i
+                                            class="mdi mdi-pencil"></i></a>
+                                    {% if user.state == 1 %}
+                                    <a class="btn btn-xs btn-default" href="?id={{user.id}}&state=0" title="禁止"
+                                       data-toggle="tooltip"><i
+                                            class="mdi mdi-eye"></i></a>
+                                    {% else %}
+                                    <a class="btn btn-xs btn-default" href="?id={{user.id}}&state=1" title="正常"
+                                       data-toggle="tooltip"><i
+                                            class="mdi mdi-eye"></i></a>
+                                    {% endif %}
+                                    <a class="btn btn-xs btn-default" href="?delete={{user.id}}" title="删除"
+                                       data-toggle="tooltip"><i
+                                            class="mdi mdi-window-close"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="pagination">
+                    {% if count > 0%}
+                        {% if number > 1 %}
+                            <li ><a href="?page={{number-1}}">«</a></li>
+                        {% endif %}
+                        {% for i in range(number,count+1) %}
+                            {% if i == number %}
+                                <li class="active">
+                                    <span>{{i}}</span>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="?page={{i}}">{{i}}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                         <li><a href="?page={{number+1}}">»</a></li>
+                    {%endif%}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

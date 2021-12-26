@@ -1,0 +1,126 @@
+{% extends 'index/common/base.html' %}
+{% block title %}
+{{subdate.article_title}}
+{% endblock %}
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='index/css/article.css')}}"/>
+{% endblock %}
+{% block main %}
+<div class="main ">
+    <div class="article">
+        <div class="article_content">
+            {% if subdate.article_encryption == 1%}
+            <div class="article_title">
+                {{subdate.article_title}}
+            </div>
+            <div class="article_info">
+                <span>时间:{{subdate.datetime}}</span>
+                <span>访问次数: {{subdate.Access_number}} 次</span>
+            </div>
+            <div class="article_text" id="article_text">
+                {{subdate.article_content}}
+            </div>
+            <div class="Copyright">
+                <p>本站部分文章、数据、图片来自互联网,一切版权均归源网站或源作者所有。</p>
+                <p>如果侵犯了你的权益请来信告知删除。{{g.config.email}}</p>
+            </div>
+
+            <div class="in_before">
+                <p style="left: 0;">
+                    <a href="{{befores.navbar.nav_href}}/{{befores.id}}">上一篇 :{{befores.article_title}}</a></p>
+                <p style="right: 0;">
+                    <a href="{{ends.navbar.nav_href}}/{{ends.id}}">下一篇 :{{ends.article_title}}</a></p>
+            </div>
+
+            {% else %}
+            {% if article_encryption %}
+            <div class="article_title">
+                {{subdate.article_title}}
+            </div>
+            <div class="article_info">
+                <span>时间:{{subdate.datetime}}</span>
+                <span>访问次数: {{subdate.Access_number}}次</span>
+            </div>
+            <div class="article_text" id="article_text">
+                {{subdate.article_content}}
+            </div>
+            <div class="Copyright">
+                <p>本站部分文章、数据、图片来自互联网,一切版权均归源网站或源作者所有。</p>
+                <p>如果侵犯了你的权益请来信告知删除。{{g.config.email}}</p>
+            </div>
+
+            <div class="in_before">
+                <p style="left: 0;">
+                    <a href="{{befores.navbar.nav_href}}/{{befores.id}}">上一篇 :{{befores.article_title}}</a></p>
+                <p style="right: 0;">
+                    <a href="{{ends.navbar.nav_href}}/{{ends.id}}">下一篇 :{{ends.article_title}}</a></p>
+            </div>
+
+
+            {% else %}
+            <form action="{{url_for('index.get_subaddress',address=subdate.navbar.nav_href,subaddress=subdate.id)}}" method="post">
+                <div class="encryption">
+                    {% for messages in get_flashed_messages() %}
+                        <label style="width: 100%;color:red;margin-left: 30%;">{{messages}}</label>
+                    {% endfor %}
+                    <p>
+                        密码: <input type="text" name="password" style="width: 80%" />
+                    </p>
+                    <button type="submit">提交密码</button>
+
+                </div>
+            </form>
+            {% endif %}
+            {%endif%}
+        </div>
+    </div>
+    <div class="right">
+        <div class="news_list">
+            <div class="news_list_title">
+                <span id="latest_article_btn">最新文章</span>
+                <span id="hot_comments_btn">热门文章</span>
+            </div>
+            <ul id="latest_article_list">
+                {% for article in data %}
+                    {% if article.article_show == 1%}
+                        <li>
+                            <a href="{{article.navbar.nav_href}}/{{article.id}}">{{article.article_title}}</a>
+                        </li>
+                    {% endif%}
+                {% endfor %}
+            </ul>
+            <ul style="display: none;" id="hot_comments_list">
+                {% for article in datas %}
+                    {% if article.article_show == 1%}
+                        <li>
+                            <a href="{{article.navbar.nav_href}}/{{article.id}}">{{article.article_title}}</a>
+                        </li>
+                    {% endif%}
+                {% endfor %}
+            </ul>
+        </div>
+<!--        <div class="news_list">-->
+<!--            <div class="news_list_title">-->
+<!--                <span >猜你喜欢</span>-->
+<!--            </div>-->
+<!--            <ul >-->
+<!--                <li>-->
+<!--                    <a href="">抱歉,目前我猜不到</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+
+<!--        </div>-->
+    </div>
+</div>
+{%endblock%}
+{% block script%}
+<script type="text/javascript">
+    try {
+        var text = document.getElementById("article_text")
+        document.getElementById("article_text").innerHTML = text.innerText
+    }catch (e) {
+
+    }
+    
+</script>
+{% endblock%}

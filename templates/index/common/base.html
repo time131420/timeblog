@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %} {% endblock %} - {{g.config.name}}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="keywords" content="{{g.config.keyword}}">
+    <meta name="description" content="{{g.config.content}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='index/css/index.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='index/css/iconfont.css')}}"/>
+    {% block link %} {% endblock %}
+</head>
+<body>
+<div class="app">
+    <div class="top">
+        <ul class="nav">
+            <button id="nav_btn"><i class=" iconfont icon-hanbaocaidanzhedie"></i></button>
+            <li class="nav_title">
+                {{g.config.name}}
+            </li>
+            {% for nav in g.navigation_bar %}
+            {% if nav.state == 1%}
+            <li class="nav_item">
+                <a href="{{nav.nav_href}}">
+                    <span>{{nav.nav_name}}</span>
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            <li class="nav_item search_btn">
+                <div class="search_input">
+                    <input type="text" placeholder="search.." id="search" v-model="content" @keyup.enter="search"/>
+                    <i class="iconfont icon-sousuo" id="btn_search" @click="search"></i>
+                </div>
+                <span>搜索</span>
+            </li>
+
+        </ul>
+        <div class="header">
+            <h1 class="title">{{g.config.name}}</h1>
+            <p>{{g.config.subhead}}</p>
+        </div>
+    </div>
+    {% block main %}{% endblock %}
+    <div class="footer">
+        <p>©版权所有 {{g.config.copyright}}</p>
+        <p>Copyright © www.kaixin.red All Rights Reserved.</p>
+    </div>
+</div>
+<script src="{{url_for('static',filename='index/js/vue-2.6.js')}}"></script>
+<script type="text/javascript">
+    new Vue({
+        el: '.search_btn',
+        data: {
+            content: ''
+        },
+        methods: {
+            search() {
+                window.location.href = 'search?content=' + this.content;
+            }
+        }
+    });
+    var nav_btn = document.getElementById('nav_btn')
+    var nav_item = document.getElementsByClassName("nav_item")
+    var show = true
+    nav_btn.onclick = function () {
+        if (show) {
+            for (var i = 0; i < nav_item.length; i++) {
+                nav_item[i].style.display = 'block'
+            }
+            show = false
+        } else {
+            for (var i = 0; i < nav_item.length; i++) {
+                nav_item[i].style.display = 'none'
+            }
+            show = true
+        }
+
+    }
+    var latest_article_btn = document.getElementById('latest_article_btn')
+    var latest_article_list = document.getElementById('latest_article_list')
+    var hot_comments_btn = document.getElementById('hot_comments_btn')
+    var hot_comments_list = document.getElementById('hot_comments_list')
+
+    latest_article_btn.onclick = function () {
+        latest_article_list.style.display = 'block'
+        hot_comments_list.style.display = 'none'
+
+        latest_article_btn.style.color = '#ddd'
+        hot_comments_btn.style.color = 'white'
+
+        latest_article_btn.style.fontWeight = 'bold'
+        hot_comments_btn.style.fontWeight = 'normal'
+    }
+    hot_comments_btn.onclick = function () {
+        latest_article_list.style.display = 'none'
+        hot_comments_list.style.display = 'block'
+
+        hot_comments_btn.style.color = '#ddd'
+        latest_article_btn.style.color = 'white'
+
+        latest_article_btn.style.fontWeight = 'normal'
+        hot_comments_btn.style.fontWeight = 'bold'
+    }
+</script>
+{% block script%}
+{% endblock%}
+</body>
+</html>

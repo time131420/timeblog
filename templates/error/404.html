@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>出错了</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+			}
+			.app{
+				position: relative;
+				background: url({{url_for('static',filename='index/image/bg.png')}}) center center no-repeat;
+				background-size: cover;
+				width: 100vw;
+				height: 100vh;
+			}
+			.img{
+				position: absolute;
+				top: 30%;
+				left: 40%;
+			}
+			.img>img{
+				position: absolute;
+				width: 200px;
+				height: 200px;
+				border-radius: 50%;
+				border: 2px solid #fff;
+			}
+			.img>h1{
+				position: absolute;
+				font-size: 60px;
+				bottom: -280px;
+				left: 45px;
+				color: white;
+				cursor: pointer;
+			}
+			.img>h1:hover{
+				transform: rotate3d(1, 1, 1, 360deg);
+				transition: 3s;
+			}
+			.img>img:hover{
+				transform: rotateZ(360deg);
+				transition: 3s;
+				border-color: #10AEFF;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="app">
+			<div class="img">
+				<img src="{{url_for('static',filename='index/image/top.png')}}" />
+				<h1>404</h1>
+			</div>
+		</div>
+	</body>
+</html>

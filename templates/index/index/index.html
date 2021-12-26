@@ -1,0 +1,107 @@
+{% extends 'index/common/base.html'%}
+
+{% block title %}
+首页
+{% endblock %}
+
+{% block link %}
+
+{% endblock %}
+
+
+{% block main %}
+<div class="main ">
+    <ul class="blog">
+        {% for article in  articles %}
+            {% if article.article_show == 1%}
+                <li class="blog_list">
+                    <a href="{{article.navbar.nav_href}}/{{article.id}}">
+                        <img src="{{article.article_img}}"/>
+                        <span class="label" style="">{{article.navbar.nav_name}}</span>
+                        <div class="blog_list_content">
+                            <p class="list_content_title">{{article.article_title}}</p>
+                            <p class="list_content_txt">
+                                {{article.article_introduce}}
+                            </p>
+                            <p class="list_content_time">
+                                <span>时间: {{article.datetime}}</span>
+                            </p>
+                        </div>
+                    </a>
+                </li>
+            {% endif%}
+        {% endfor %}
+    </ul>
+    <div class="right">
+        <div class="blog_list">
+            <div class="blog_list_content">
+                <p class="list_content_title">
+                    {{g.config.author}}
+                </p>
+                <p class="list_content_txt">
+                    {{g.config.author_referral}}
+                </p>
+            </div>
+        </div>
+        <div class="news_list">
+            <div class="news_list_title">
+                <span id="latest_article_btn">最新文章</span>
+                <span id="hot_comments_btn">热门文章</span>
+            </div>
+            <ul id="latest_article_list">
+                {% for article in data %}
+                    {% if article.article_show == 1%}
+                        <li>
+                            <a href="{{article.navbar.nav_href}}/{{article.id}}">{{article.article_title}}</a>
+                        </li>
+                    {% endif%}
+                {% endfor %}
+            </ul>
+            <ul style="display: none;" id="hot_comments_list">
+                {% for article in datas %}
+                    {% if article.article_show == 1%}
+                        <li>
+                            <a href="{{article.navbar.nav_href}}/{{article.id}}">{{article.article_title}}</a>
+                        </li>
+                    {% endif%}
+                {% endfor %}
+            </ul>
+        </div>
+        {% if g.config.information != None and g.config.information != "" %}
+            <div class="blog_list">
+                <div class="news_list_title">
+                    <span>站点信息-{{g.config.information}}</span>
+                </div>
+                <ul class="blog_list_content" id="information">
+                    {{g.config.information}}
+                </ul>
+            </div>
+        {% endif %}
+        <div class="blog_list">
+            <ul class="blog_list_content">
+                <div class="news_list_title">
+                    <span>友情链接</span>
+                </div>
+                {% for blogroll in g.blogroll %}
+                    {% if blogroll.state ==  1 %}
+                        <li class="blogroll">
+                            <a href="//{{blogroll.href}}" target="_blank">{{blogroll.name}}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script%}
+    <script>
+        var information = document.getElementById("information")
+        try {
+             information.innerHTML = information.innerText
+        } catch(e) {}
+
+    </script>
+{% endblock%}

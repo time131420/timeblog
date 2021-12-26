@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>{%block title%} {%endblock%} - {{g.config.name}}</title>
+    <!--    <link rel="icon" href="favicon.ico" type="image/ico">-->
+    <link href="{{url_for('static',filename='/admin/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static',filename='/admin/css/materialdesignicons.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static',filename='/admin/css/style.min.css')}}" rel="stylesheet">
+</head>
+
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!--左侧导航-->
+        <aside class="lyear-layout-sidebar">
+
+            <!-- logo -->
+            <div id="logo" class="sidebar-header">
+                <a href="{{url_for('admin.index')}}"><h1>后台管理</h1></a>
+            </div>
+            <div class="lyear-layout-sidebar-scroll">
+
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer">
+                        <li class="nav-item"><a href="{{url_for('admin.index')}}"><i class="mdi mdi-home"></i> 后台首页</a>
+                        </li>
+                        <li class="nav-item"><a href="{{url_for('admin.editConfig')}}"><i class="mdi mdi-settings"></i>
+                            网站设置</a></li>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-book-open-variant"></i> 文章管理</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="{{url_for('admin.article_add')}}">添加文章</a></li>
+                                <li><a href="{{url_for('admin.article_list')}}">文章列表</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-worker"></i> 友链管理</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="{{url_for('admin.blogroll_add')}}">添加友链</a></li>
+                                <li><a href="{{url_for('admin.blogroll_list')}}">友链列表</a></li>
+                            </ul>
+                        </li>
+                        {% if g.userAdmin.type == '超级管理员' %}
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-navigation"></i> 导航管理</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="{{url_for('admin.navigation_add')}}">添加导航</a></li>
+                                <li><a href="{{url_for('admin.navigation_list')}}">导航列表</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-account-settings-variant"></i>管理员</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="{{url_for('admin.superuser_add')}}">添加管理员</a></li>
+                                <li><a href="{{url_for('admin.superuser_list')}}">管理员列表</a></li>
+                            </ul>
+                        </li>
+                        {%endif%}
+                    </ul>
+                </nav>
+
+            </div>
+
+        </aside>
+        <!--End 左侧导航-->
+
+        <!--头部信息-->
+        <header class="lyear-layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+
+                    <div class="topbar-left">
+                        <div class="lyear-aside-toggler">
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                        </div>
+                    </div>
+
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <span>当前用户:</span>
+                                <span>{{g.userAdmin.name}} <span class="caret"></span></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="{{url_for('admin.eidtpwd')}}"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="{{url_for('admin.logout')}}"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <!--End 头部信息-->
+
+        <!--页面主要内容-->
+        <main class="lyear-layout-content">
+
+            <div class="container-fluid">
+                {% block main %}
+                {% endblock %}
+            </div>
+        </main>
+        <!--End 页面主要内容-->
+    </div>
+</div>
+
+<script type="text/javascript" src=" {{url_for('static',filename='/admin/js/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='admin/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='admin/js/perfect-scrollbar.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='admin/js/main.min.js')}}"></script>
+
+</body>
+</html>

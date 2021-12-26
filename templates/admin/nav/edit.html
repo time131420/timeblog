@@ -1,0 +1,54 @@
+{% extends 'admin/common/base.html' %}
+
+{% block title%}
+编辑导航
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><h4>编辑导航</h4></div>
+            <div class="card-body">
+
+                <form action="{{url_for('admin.navigation_list')}}?edit={{nav.id}}" method="post">
+                    <div class="form-group">
+                        <label>导航名称</label>
+                        <input class="form-control" type="text" name="nav_name"
+                               placeholder="请输入导航名称.." value="{{nav.nav_name}}" />
+                    </div>
+                    <div class="form-group">
+                        <label>导航地址</label>
+                        <input class="form-control" type="text" name="nav_href"
+                               placeholder="请输入导航地址,加/.." value="{{nav.nav_href}}">
+                    </div>
+                    <div class="form-group">
+                        <label>状态</label>
+                        <div class="clearfix">
+                            {% if nav.state == 1 %}
+                            <label class="lyear-radio radio-inline radio-primary">
+                                <input type="radio" name="state" value="0"><span>不显示</span>
+                            </label>
+                            <label class="lyear-radio radio-inline radio-primary">
+                                <input type="radio" name="state" value="1" checked><span>显示</span>
+                            </label>
+                            {% else %}
+                            <label class="lyear-radio radio-inline radio-primary">
+                                <input type="radio" name="state" value="0" checked><span>不显示</span>
+                            </label>
+                            <label class="lyear-radio radio-inline radio-primary">
+                                <input type="radio" name="state" value="1"><span>显示</span>
+                            </label>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">修改</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

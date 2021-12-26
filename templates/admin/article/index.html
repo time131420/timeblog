@@ -1,0 +1,120 @@
+{% extends 'admin/common/base.html' %}
+
+{% block title %}
+文章列表
+{% endblock %}
+
+{% block main%}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-toolbar clearfix">
+                <form class="pull-right search-bar" method="get" action="" role="form">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown"
+                                    type="button" aria-haspopup="true" aria-expanded="false">
+                                标题 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a tabindex="-1" href="javascript:void(0)" data-field="title">标题</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control" value="" name="search" placeholder="请输入名称">
+                    </div>
+                </form>
+                <div class="toolbar-btn-action">
+                    <h2>文章列表</h2>
+                </div>
+            </div>
+            {% for messages in get_flashed_messages() %}
+            <div class="form-group alert alert-success" style="margin: 1%">
+                <label>{{messages}}</label>
+            </div>
+            {% endfor %}
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>标题</th>
+                            <th>板块</th>
+                            <th>状态</th>
+                            <th>加密</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for article in article_list %}
+                        <tr>
+                            <td>{{article.id}}</td>
+                            <td><a href="?eidt={{article.id}}" style="color:#000;">{{article.article_title}}</a></td>
+                            <td>{{article.navbar.nav_name }}</td>
+                            {% if article.article_show == 1%}
+                                <td class="text-success">正常</td>
+                            {%else%}
+                                <td class="text-danger">禁止</td>
+                            {%endif%}
+                            {% if article.article_encryption == 1%}
+                                <td class="text-success">不加密</td>
+                            {%else%}
+                                <td class="text-danger">加密</td>
+                            {%endif%}
+                            <td>{{article.datetime}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-xs btn-default" href="?eidt={{article.id}}" title="编辑" data-toggle="tooltip"><i
+                                            class="mdi mdi-pencil"></i></a>
+                                    {% if article.article_show == 1%}
+                                    <a class="btn btn-xs btn-default" href="?article_show={{article.id}}&show=0" title="禁止" data-toggle="tooltip"><i
+                                            class="mdi mdi-eye"></i></a>
+                                    {%else%}
+                                    <a class="btn btn-xs btn-default" href="?article_show={{article.id}}&show=1" title="显示" data-toggle="tooltip"><i
+                                            class="mdi mdi-eye"></i></a>
+                                    {%endif%}
+                                    {% if article.article_encryption == 1%}
+                                    <a class="btn btn-xs btn-default" href="?id={{article.id}}&encryption=0" title="加密"
+                                       data-toggle="tooltip"><i
+                                            class="mdi mdi-textbox-password"></i></a>
+                                    {%else%}
+                                    <a class="btn btn-xs btn-default" href="?id={{article.id}}&encryption=0" title="不加密"
+                                       data-toggle="tooltip"><i
+                                            class="mdi mdi-textbox-password"></i></a>
+                                    {%endif%}
+                                    <a class="btn btn-xs btn-default" href="?delete={{article.id}}" title="删除"
+                                       data-toggle="tooltip"><i
+                                            class="mdi mdi-window-close"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="pagination">
+                    {% if count > 0%}
+                        {% if number > 1 %}
+                            <li ><a href="?page={{number-1}}">«</a></li>
+                        {% endif %}
+                        {% for i in range(number,count+1) %}
+                            {% if i == number %}
+                                <li class="active">
+                                    <span>{{i}}</span>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="?page={{i}}">{{i}}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                         <li><a href="?page={{number+1}}">»</a></li>
+                    {%endif%}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

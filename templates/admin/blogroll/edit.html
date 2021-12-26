@@ -1,0 +1,54 @@
+{% extends 'admin/common/base.html' %}
+
+{% block title%}
+修改友链
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><h4>修改友链</h4></div>
+            <div class="card-body">
+
+                <form action="{{url_for('admin.blogroll_list')}}?edit={{blogroll.id}}" method="post">
+                    <div class="form-group">
+                        <label>名称</label>
+                        <input class="form-control" type="text" name="name" value="{{blogroll.name}}"
+                               placeholder="请输入友链名称..">
+                    </div>
+                    <div class="form-group">
+                        <label>地址</label>
+                        <input class="form-control" type="text" name="href" value="{{blogroll.href}}"
+                               placeholder="请输入友链地址不用带https://..">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>状态</label>
+                        <div class="clearfix">
+                            {% if blogroll.state == 1%}
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="state" value="0"><span>不显示</span>
+                                </label>
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="state" value="1" checked><span>显示</span>
+                                </label>
+                            {% else %}
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="state" value="0" checked><span>不显示</span>
+                                </label>
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="state" value="1" ><span>显示</span>
+                                </label>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">添加</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
