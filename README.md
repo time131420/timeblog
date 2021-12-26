@@ -1,11 +1,16 @@
 # 开心小窝
-###  整体 基础与Python的Flask 框架
-###  前端为html + css + JavaScript 的自写响应式布局
+- 是一个基础与Python的Flask框架的一款个人博客
+- 数据库采用了FLASK_SQLALCHEMY
+  - 直接使用迁移脚本命令即可导入
+  - 加密采用了 generate_password_hash
+- 这是一个废废写的代码的不足望多多谅解
+- 如有建议请反馈邮箱:916003388kaixin@gmail.com
+## 前端为html + css + JavaScript 的自写响应式布局
+  - 部分展示图 
   ![image](https://user-images.githubusercontent.com/48399057/147403860-2c261acc-ed28-4a7f-b1a6-1cd38c30b978.png)
-
-  
+  ![image](https://user-images.githubusercontent.com/48399057/147404224-909d3ef9-4175-4f36-bdba-232c0173a6bc.png)
 ###  后端采用了 "光年后台" 模板 布局 
-
+   -  目前不做展示
 ### 后端当前功能:
 - 网站编辑
   - 网站名称
@@ -33,11 +38,15 @@
 - 友链
   - 添加友链链接
   - 搜索友链
-  - 修改友链地址 
+  - 修改友链地址
+   - 显示/禁止 
 - 管理员
   - 添加管理员
    - 普通管理员
+    - 部分权限限制
    - 超级管理员
   - 编辑管理员信息
    - 禁止/允许
   - 搜索管理员
+- 当前账户
+  - 修改密码
